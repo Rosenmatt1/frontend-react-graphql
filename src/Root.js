@@ -1,6 +1,5 @@
 import React from "react";
 import withRoot from "./withRoot";
-
 import { Query } from "react-apollo";
 import { gql } from 'apollo-boost'; //allows to parse
 
