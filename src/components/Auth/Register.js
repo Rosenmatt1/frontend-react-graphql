@@ -18,10 +18,30 @@ import Slide from "@material-ui/core/Slide";
 import Gavel from "@material-ui/icons/Gavel";
 import VerifiedUserTwoTone from "@material-ui/icons/VerifiedUserTwoTone";
 
-const Register = ({ classes }) => {
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+function Transition(props) {
+  return <Slide direction="up" {...props}/>
+}
+
+const Register = ({ classes, setNewUser }) => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleSubmit = (e, createUser) => {
+    e.preventDefault()
+    createUser()
+    // This object could be passed into createUser, instead of passing variables into Mutation tag
+
+    // {
+    //   variables: {
+    //     username: username,
+    //     email: email,
+    //     password: password
+    //   }
+    // }
+
+  }
 
 
   return (
@@ -34,11 +54,14 @@ const Register = ({ classes }) => {
           Register
         </Typography>
 
-        <Mutation mutation={REGISTER_MUTATION}>
-          {() => {
+        <Mutation mutation={REGISTER_MUTATION} variables={{ username, email, password }} onCompleted={data => {
+          console.log({ data })
+          setOpen(true)
+        }}>
+          {(createUser, { loading, error }) => {
 
             return (
-              <form className={classes.form}>
+              <form onSubmit={(e) => handleSubmit(e, createUser)} className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="username"> Username </InputLabel>
                   <Input id="username" onChange={e => setUsername(e.target.value)} />
@@ -53,18 +76,34 @@ const Register = ({ classes }) => {
                   <InputLabel htmlFor="password"> Password </InputLabel>
                   <Input id="password" type="password" onChange={e => setPassword(e.target.value)} />
                 </FormControl >
-                <Button type="submit" fullWidth variant="contained" color="secondary" className={classes.submit}>
-                  Register
+                <Button type="submit" fullWidth variant="contained" color="secondary" disabled={loading || !username.trim() || !email.trim() || !password.trim()} className={classes.submit}>
+                  {loading ? "Registering..." : "Register"}
                 </Button>
-                <Button  fullWidth color="primary" variant="outlined">
+                <Button fullWidth color="primary" variant="outlined" onClick={() => setNewUser(false)}>
                   Previous user? Log in here
                 </Button>
+
+                {/* Error Handling  */}
+                {error && <div>Error</div>}
               </form>
             )
           }}
         </Mutation>
-
       </Paper>
+      <Dialog disableBackdropClick={true} open={open} TransitionComponent={Transition}>
+
+        {/* means they can't get rid of dialogue by clicking on background */}
+        <DialogTitle>
+          <VerifiedUserTwoTone className={classes.icon} />
+          New Account
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText> User {username} Successfully Created! </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button color="primary" variant="contained" onClick={() => setNewUser(false)}> Login </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 };
