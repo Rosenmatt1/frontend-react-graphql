@@ -41,7 +41,6 @@ const Register = ({ classes, setNewUser }) => {
     //     password: password
     //   }
     // }
-
   }
 
 
