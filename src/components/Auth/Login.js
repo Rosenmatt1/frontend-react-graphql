@@ -25,14 +25,16 @@ const Login = ({ classes, setNewUser }) => {
         </Avatar>
         <Typography variant="title">
           Login as existing User
-      </Typography>
+        </Typography>
 
-        <Mutation mutation={REGISTER_MUTATION} variables={{ username, password }} >
-          {(createUser, { loading, error }) => {
+        <Mutation mutation={LOGIN_MUTATION} variables={{ username, password }} onCompleted={data => {
+          console.log(data)
+        }}>
+          {(tokenAuth, { loading, error }) => {
 
-            const handleSubmit = (e, createUser) => {
+            const handleSubmit = (e, tokenAuth) => {
               e.preventDefault()
-              createUser()
+              tokenAuth()
               // This object could be passed into createUser, instead of passing variables into Mutation tag
               // {
               //   variables: {
@@ -43,7 +45,7 @@ const Login = ({ classes, setNewUser }) => {
             }
 
             return (
-              <form onSubmit={(e) => handleSubmit(e, createUser)} className={classes.form}>
+              <form onSubmit={(e) => handleSubmit(e, tokenAuth)} className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="username"> Username </InputLabel>
                   <Input id="username" onChange={e => setUsername(e.target.value)} />
@@ -71,6 +73,14 @@ const Login = ({ classes, setNewUser }) => {
     </div>
   )
 };
+
+const LOGIN_MUTATION = gql`
+mutation ($username: String!, $password: String!) {
+  tokenAuth(username:$username, password:$password) {
+    token 
+  }
+}`
+
 
 const styles = theme => ({
   root: {

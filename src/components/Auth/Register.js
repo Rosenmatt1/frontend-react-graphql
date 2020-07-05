@@ -109,15 +109,14 @@ const Register = ({ classes, setNewUser }) => {
 };
 
 const REGISTER_MUTATION = gql`
-mutation ($username: String, $email: String!, $password: String!) {
+mutation ($username: String!, $email: String!, $password: String!) {
   createUser(username:$username, email:$email, password:$password) {
     user {
       username
       email
     }
   }
-}
-`
+}`
 
 const styles = theme => ({
   root: {
