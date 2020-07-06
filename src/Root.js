@@ -1,19 +1,31 @@
 import React from "react";
-import withRoot from "./withRoot";
 import { Query } from "react-apollo";
 import { gql } from 'apollo-boost'; //allows to parse
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import withRoot from "./withRoot";
+import App from './pages/App';
+import Profile from './pages/Profile';
 
 const Root = () => (
     <Query query={ME_QUERY}>
-        {({ data, loading, error}) => {
+        {({ data, loading, error }) => {
             if (loading) return <div>Loading</div>
             if (error) return <div>Error</div>
 
-            return <div>{JSON.stringify(data)}</div>
+            return (
+                <Router>
+                    <Switch>
+                        <Route exact path="/" component={App} />
+                        <Route path="/profile/:id" component={Profile} />
+                    </Switch>
+                </Router>
+            )
         }}
     </Query>
 )
 
+//allows to query for current user
 const ME_QUERY = gql`
     {
         me {
