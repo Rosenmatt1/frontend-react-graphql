@@ -27,21 +27,14 @@ const Login = ({ classes, setNewUser }) => {
           Login as existing User
         </Typography>
 
-        <Mutation mutation={LOGIN_MUTATION} variables={{ username, password }} onCompleted={data => {
-          console.log(data)
-        }}>
+        <Mutation mutation={LOGIN_MUTATION} variables={{ username, password }}>
           {(tokenAuth, { loading, error }) => {
 
-            const handleSubmit = (e, tokenAuth) => {
+            const handleSubmit = async (e, tokenAuth) => {
               e.preventDefault()
-              tokenAuth()
-              // This object could be passed into createUser, instead of passing variables into Mutation tag
-              // {
-              //   variables: {
-              //     username: username,
-              //     password: password
-              //   }
-              // }
+              const res = await tokenAuth();
+              console.log(res)
+              localStorage.setItem('authToken', res.data.tokenAuth.token)
             }
 
             return (
