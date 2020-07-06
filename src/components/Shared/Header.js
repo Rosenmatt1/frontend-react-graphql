@@ -14,7 +14,6 @@ const Header = ({ classes, currentUser }) => {
     <AppBar position="static" className={classes.root}>
       <Toolbar>
 
-        {/* Title and Logo */}
         <Link to="/" classes={classes.grow}>
           <RadioIcon className={classes.logo} color='secondary' />
           <Typography variant="headline" color="secondary" noWrap>
@@ -22,7 +21,6 @@ const Header = ({ classes, currentUser }) => {
             </Typography>
         </Link>
 
-        {/* Auth User Info */}
         {currentUser && (
           <Link to={`/profile/${currentUser.id}`} className={classes.grow}>
             <FaceIcon className={classes.faceIcon} />
@@ -32,7 +30,6 @@ const Header = ({ classes, currentUser }) => {
           </Link>
         )}
 
-        {/* Signout */}
         <Signout />
 
       </Toolbar>
