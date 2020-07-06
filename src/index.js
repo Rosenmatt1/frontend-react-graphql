@@ -1,13 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Root from "./Root";
 import * as serviceWorker from "./serviceWorker";
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
+
+import Root from "./Root";
 import Auth from './components/Auth'
 
 const client = new ApolloClient({
-    uri: 'http://localhost:8000/graphql/'
+    uri: 'http://localhost:8000/graphql/',
+    clientState: {
+        defaults: {
+            isLoggedIn: !!localStorage.getItem('authToken')
+            //the double !! converts any value to a boolean
+        }
+    }
 })
 
 ReactDOM.render(
