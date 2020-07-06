@@ -28,17 +28,18 @@ const Login = ({ classes, setNewUser }) => {
         </Typography>
 
         <Mutation mutation={LOGIN_MUTATION} variables={{ username, password }}>
-          {(tokenAuth, { loading, error }) => {
+          {(tokenAuth, { loading, error, called, client}) => {
 
-            const handleSubmit = async (e, tokenAuth) => {
+            const handleSubmit = async (e, tokenAuth, client) => {
               e.preventDefault()
               const res = await tokenAuth();
               console.log(res)
               localStorage.setItem('authToken', res.data.tokenAuth.token)
+              client.writeData({ data: { isLoggedIn: true } })  //way to get access to state
             }
 
             return (
-              <form onSubmit={(e) => handleSubmit(e, tokenAuth)} className={classes.form}>
+              <form onSubmit={(e) => handleSubmit(e, tokenAuth, client)} className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="username"> Username </InputLabel>
                   <Input id="username" onChange={e => setUsername(e.target.value)} />
