@@ -22,7 +22,7 @@ const Header = ({ classes, currentUser }) => {
         </Link>
 
         {currentUser && (
-          <Link to={`/profile/${currentUser.id}`} className={classes.grow}>
+          <Link to={`/profile/${currentUser.id}`} className={classes.groot}>
             <FaceIcon className={classes.faceIcon} />
             <Typography variant="headline" color="secondary" className={classes.username} noWrap>
               {currentUser.username}
@@ -47,6 +47,13 @@ const styles = theme => ({
     flexGrow: 1,
     display: "flex",
     alignItems: "center",
+    textDecoration: "none"
+  },
+  groot: {
+    flexGrow: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     textDecoration: "none"
   },
   logo: {
