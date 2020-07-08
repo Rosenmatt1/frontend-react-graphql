@@ -33,7 +33,6 @@ const IS_LOGGED_IN_QUERY = gql`
         isLoggedIn @client
     }
 `
-
 ReactDOM.render(
     <ApolloProvider client={client}>
         <Query query={IS_LOGGED_IN_QUERY}>
