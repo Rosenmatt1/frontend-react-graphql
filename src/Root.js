@@ -15,7 +15,7 @@ import Error from './components/Shared/Error';
 const Root = () => (
     <Query query={ME_QUERY}>
         {({ data, loading, error }) => {
-            if (loading) return <Loading loading={error}/>
+            if (loading) return <Loading loading={loading}/>
             if (error) return <Error error={error}/>
             const currentUser = data.me
 
