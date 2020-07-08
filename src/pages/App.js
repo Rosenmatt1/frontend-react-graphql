@@ -14,11 +14,36 @@ const App = ({ classes }) => {
   <div className={classes.container}>
     <SearchTracks />
     <CreateTrack />
-    <TrackList />
+    
+    <Query query={GET_TRACKS_QUERY}>
+      {({ data, loading, error }) => {
+        
+      }}
+
+
+    </Query>
 
   </div>
     )
 };
+
+const GET_TRACKS_QUERY = gql`
+  query getTracksQuery {
+    tracks {
+      id
+      title
+      description
+      url
+      likes {
+        id
+      }
+      postedBy {
+        id 
+        username
+      }
+    }
+  }
+`
 
 const styles = theme => ({
   container: {
