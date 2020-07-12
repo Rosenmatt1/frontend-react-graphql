@@ -1,21 +1,75 @@
 import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-// import Dialog from "@material-ui/core/Dialog";
-// import DialogActions from "@material-ui/core/DialogActions";
-// import DialogContent from "@material-ui/core/DialogContent";
-// import DialogContentText from "@material-ui/core/DialogContentText";
-// import DialogTitle from "@material-ui/core/DialogTitle";
-// import FormControl from "@material-ui/core/FormControl";
-// import FormHelperText from "@material-ui/core/FormHelperText";
-// import TextField from "@material-ui/core/TextField";
-// import Button from "@material-ui/core/Button";
-// import CircularProgress from "@material-ui/core/CircularProgress";
-// import AddIcon from "@material-ui/icons/Add";
-// import ClearIcon from "@material-ui/icons/Clear";
-// import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import AddIcon from "@material-ui/icons/Add";
+import ClearIcon from "@material-ui/icons/Clear";
+import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
 
 const CreateTrack = ({ classes }) => {
-  return <div>CreateTrack</div>;
+  return (
+      <>
+        {/* Create Track Button */}
+          <Button variant="fab" className={classes.fab} color="secondary">
+            <AddIcon />
+
+          </Button>
+
+        {/* Create Track Dialogue */}
+        <Dialog open={true} className={classes.dialog}>
+          <form>
+            <DialogTitle>Create Track</DialogTitle>
+
+            <DialogContent>
+              <DialogContentText>
+                Add a Title, Description, & Audio File
+              </DialogContentText>
+              <FormControl fullWidth>
+                <TextField
+                  label="Title"
+                  placeholder="Add Title"
+                  className={classes.textfield}
+                />
+              </FormControl>
+              <FormControl fullWidth>
+                <TextField
+                  label="Description"
+                  placeholder="Add Description"
+                  className={classes.textfield}
+                />
+              </FormControl>
+              <FormControl>
+                <input required id="audio" type="file" className={classes.input} />
+                <label htmlFor="audio">
+                  <Button variant="outlined" color="inherit" component="span" className={classes.button}>
+                    Audio File
+                    <LibraryMusicIcon className={classes.icon}/>
+                  </Button>
+                </label>
+              </FormControl>
+            </DialogContent>
+
+            <DialogActions>
+              <Button className={classes.cancel}>
+                Cancel
+              </Button>
+              <Button type="submit" className={classes.save}>
+                Add a Track
+              </Button>
+            </DialogActions>
+
+          </form>
+        </Dialog>
+      </>
+    )
 };
 
 const styles = theme => ({
