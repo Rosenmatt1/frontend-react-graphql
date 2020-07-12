@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -15,16 +15,18 @@ import ClearIcon from "@material-ui/icons/Clear";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
 
 const CreateTrack = ({ classes }) => {
+  const [open, setOpen] = useState(false)
+
   return (
       <>
         {/* Create Track Button */}
-          <Button variant="fab" className={classes.fab} color="secondary">
+          <Button onClick={() => setOpen(true)} variant="fab" className={classes.fab} color="secondary">
             <AddIcon />
 
           </Button>
 
         {/* Create Track Dialogue */}
-        <Dialog open={true} className={classes.dialog}>
+        <Dialog onClick={() => setOpen(false)} open={open} className={classes.dialog}>
           <form>
             <DialogTitle>Create Track</DialogTitle>
 
