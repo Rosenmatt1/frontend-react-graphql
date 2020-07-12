@@ -20,6 +20,12 @@ const CreateTrack = ({ classes }) => {
   const [description, setDescription] = useState("")
   const [file, setFile] = useState("")
 
+  const handleAudioChange = (e) => {
+    const selectedFile = e.target.files[0]
+    setFile(selectedFile)
+    console.log(file)
+  }
+
   return (
       <>
         {/* Create Track Button */}
@@ -38,6 +44,7 @@ const CreateTrack = ({ classes }) => {
               </DialogContentText>
               <FormControl fullWidth>
                 <TextField
+                  onChange={(e) => setTitle(e.target.value)}
                   label="Title"
                   placeholder="Add Title"
                   className={classes.textfield}
@@ -47,18 +54,20 @@ const CreateTrack = ({ classes }) => {
                 <TextField
                   multiline
                   rows="2"
+                  onChange={(e) => setDescription(e.target.value)}
                   label="Description"
                   placeholder="Add Description"
                   className={classes.textfield}
                 />
               </FormControl>
               <FormControl>
-                <input required id="audio" type="file" accept="audio/*" className={classes.input} />
+                <input required id="audio" type="file" accept="audio/*" onChange={handleAudioChange} className={classes.input} />
                 <label htmlFor="audio">
-                  <Button variant="outlined" color="inherit" component="span" className={classes.button}>
+                  <Button variant="outlined" color={file ? "secondary" : "inherit"} component="span" className={classes.button}>
                     Audio File
                     <LibraryMusicIcon className={classes.icon}/>
                   </Button>
+                  {file && file.name}
                 </label>
               </FormControl>
             </DialogContent>
@@ -67,7 +76,7 @@ const CreateTrack = ({ classes }) => {
               <Button onClick={() => setOpen(false)} className={classes.cancel}>
                 Cancel
               </Button>
-              <Button type="submit" className={classes.save}>
+              <Button type="submit" className={classes.save} disabled={!title.trim() || !description.trim() || !file}>
                 Add a Track
               </Button>
             </DialogActions>
