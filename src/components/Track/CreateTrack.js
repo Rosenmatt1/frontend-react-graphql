@@ -21,12 +21,11 @@ const CreateTrack = ({ classes }) => {
       <>
         {/* Create Track Button */}
           <Button onClick={() => setOpen(true)} variant="fab" className={classes.fab} color="secondary">
-            <AddIcon />
-
+            {open ? <ClearIcon/> : <AddIcon />}
           </Button>
 
         {/* Create Track Dialogue */}
-        <Dialog onClick={() => setOpen(false)} open={open} className={classes.dialog}>
+        <Dialog open={open} className={classes.dialog}>
           <form>
             <DialogTitle>Create Track</DialogTitle>
 
@@ -43,13 +42,15 @@ const CreateTrack = ({ classes }) => {
               </FormControl>
               <FormControl fullWidth>
                 <TextField
+                  multiline
+                  rows="2"
                   label="Description"
                   placeholder="Add Description"
                   className={classes.textfield}
                 />
               </FormControl>
               <FormControl>
-                <input required id="audio" type="file" className={classes.input} />
+                <input required id="audio" type="file" accept="audio/*" className={classes.input} />
                 <label htmlFor="audio">
                   <Button variant="outlined" color="inherit" component="span" className={classes.button}>
                     Audio File
@@ -60,7 +61,7 @@ const CreateTrack = ({ classes }) => {
             </DialogContent>
 
             <DialogActions>
-              <Button className={classes.cancel}>
+              <Button onClick={() => setOpen(false)} className={classes.cancel}>
                 Cancel
               </Button>
               <Button type="submit" className={classes.save}>
