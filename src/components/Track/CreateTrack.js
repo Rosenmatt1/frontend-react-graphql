@@ -16,6 +16,9 @@ import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
 
 const CreateTrack = ({ classes }) => {
   const [open, setOpen] = useState(false)
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [file, setFile] = useState("")
 
   return (
       <>
