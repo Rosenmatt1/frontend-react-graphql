@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
+import axios from 'axios';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -16,16 +17,37 @@ import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
 
+import Error from '../Shared/Error';
+
 const CreateTrack = ({ classes }) => {
   const [open, setOpen] = useState(false)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [file, setFile] = useState("")
+  const [submitting, setSubmitting] = useState(false)
 
   const handleAudioChange = (e) => {
     const selectedFile = e.target.files[0]
     setFile(selectedFile)
-    console.log(file)
+    console.log("file MP3", file)
+  }
+
+  const handleAudioUpload = async () => {
+    const data = new FormData()
+    data.append('file', file)
+    data.append('resource_type', 'raw')
+    data.append('upload_preset', 'react-tracks')
+    data.append('cloud_name', 'rosenmatt1')
+    const res = await axios.post('https://api/cloudinary.com/v1_1/codeartistry/raw/upload', data)
+    return res.data.url
+  }
+
+  const handleSubmit = async (e, createTrack) => {
+    e.preventDefault()
+    //upload our audio file and get returned url from API
+    const uploadedUrl = await handleAudioUpload()
+    createTrack({ variables: { title, description, url: uploadedUrl } })
+
   }
 
   return (
@@ -36,13 +58,18 @@ const CreateTrack = ({ classes }) => {
       </Button>
 
       {/* Create Track Dialogue */}
-      <Mutation mutation={CREATE_TRACK_MUTATION}>
+      <Mutation
+        mutation={CREATE_TRACK_MUTATION}
+        onCompleted={data => {
+          console.log({ data })
+          setOpen(false)
+        }}>
         {(createTrack, { loading, error }) => {
           if (error) return <Error error={error} />
 
           return (
             <Dialog open={open} className={classes.dialog}>
-              <form>
+              <form onSubmit={e => handleSubmit(e, createTrack)}>
                 <DialogTitle>Create Track</DialogTitle>
 
                 <DialogContent>
@@ -82,10 +109,10 @@ const CreateTrack = ({ classes }) => {
                 <DialogActions>
                   <Button onClick={() => setOpen(false)} className={classes.cancel}>
                     Cancel
-              </Button>
+                  </Button>
                   <Button type="submit" className={classes.save} disabled={!title.trim() || !description.trim() || !file}>
                     Add a Track
-              </Button>
+                  </Button>
                 </DialogActions>
 
               </form>
