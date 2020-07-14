@@ -71,9 +71,12 @@ const CreateTrack = ({ classes }) => {
           console.log({ data })
           setSubmitting(false)
           setOpen(false)
+          setTitle("")
+          setDescription("")
+          setFile("")
         }}
-        refetchQueries={() => [ { query: GET_TRACKS_QUERY} ]}  //could also use graphQL subscriptions
-        >
+        refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}  //could also use graphQL subscriptions
+      >
         {(createTrack, { loading, error }) => {
           if (error) return <Error error={error} />
 
@@ -90,6 +93,7 @@ const CreateTrack = ({ classes }) => {
                     <TextField
                       onChange={(e) => setTitle(e.target.value)}
                       label="Title"
+                      value={title}
                       placeholder="Add Title"
                       className={classes.textfield}
                     />
@@ -100,6 +104,7 @@ const CreateTrack = ({ classes }) => {
                       rows="2"
                       onChange={(e) => setDescription(e.target.value)}
                       label="Description"
+                      value={description}
                       placeholder="Add Description"
                       className={classes.textfield}
                     />
@@ -109,7 +114,7 @@ const CreateTrack = ({ classes }) => {
                     <label htmlFor="audio">
                       <Button variant="outlined" color={file ? "secondary" : "inherit"} component="span" className={classes.button}>
                         Audio File
-                    <LibraryMusicIcon className={classes.icon} />
+                        <LibraryMusicIcon className={classes.icon} />
                       </Button>
                       {file && file.name}
                     </label>
