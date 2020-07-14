@@ -29,25 +29,31 @@ const CreateTrack = ({ classes }) => {
   const handleAudioChange = (e) => {
     const selectedFile = e.target.files[0]
     setFile(selectedFile)
-    console.log("file MP3", file)
+    console.log("file MP3", selectedFile)
   }
 
   const handleAudioUpload = async () => {
-    const data = new FormData()
-    data.append('file', file)
-    data.append('resource_type', 'raw')
-    data.append('upload_preset', 'react-tracks')
-    data.append('cloud_name', 'rosenmatt1')
-    const res = await axios.post('https://api/cloudinary.com/v1_1/codeartistry/raw/upload', data)
-    return res.data.url
+    try {
+      const data = new FormData()
+      data.append('file', file)
+      data.append('resource_type', 'raw')
+      data.append('upload_preset', 'react-tracks')
+      data.append('cloud_name', 'rosenmatt1')
+      const res = await axios.post('https://api/cloudinary.com/v1_1/rosenmatt1/raw/upload', data)
+      return res.data.url
+    } catch (err) {
+      console.error('Error Uploading File', err)
+      setSubmitting(false)
+    }
   }
 
   const handleSubmit = async (e, createTrack) => {
     e.preventDefault()
+    setSubmitting(true)
     //upload our audio file and get returned url from API
     const uploadedUrl = await handleAudioUpload()
+    console.log("uploadedUrl", uploadedUrl)
     createTrack({ variables: { title, description, url: uploadedUrl } })
-
   }
 
   return (
@@ -62,6 +68,7 @@ const CreateTrack = ({ classes }) => {
         mutation={CREATE_TRACK_MUTATION}
         onCompleted={data => {
           console.log({ data })
+          setSubmitting(false)
           setOpen(false)
         }}>
         {(createTrack, { loading, error }) => {
@@ -107,21 +114,18 @@ const CreateTrack = ({ classes }) => {
                 </DialogContent>
 
                 <DialogActions>
-                  <Button onClick={() => setOpen(false)} className={classes.cancel}>
+                  <Button disabled={submitting} onClick={() => setOpen(false)} className={classes.cancel}>
                     Cancel
                   </Button>
-                  <Button type="submit" className={classes.save} disabled={!title.trim() || !description.trim() || !file}>
-                    Add a Track
+                  <Button type="submit" className={classes.save} disabled={submitting || !title.trim() || !description.trim() || !file}>
+                    {submitting ? <CircularProgress className={classes.save} size={24} /> : "Add Track"}
                   </Button>
                 </DialogActions>
-
               </form>
             </Dialog>
           )
         }}
       </Mutation>
-
-
     </>
   )
 };
