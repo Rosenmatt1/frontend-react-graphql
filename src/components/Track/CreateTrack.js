@@ -39,7 +39,7 @@ const CreateTrack = ({ classes }) => {
       data.append('resource_type', 'raw')
       data.append('upload_preset', 'react-tracks')
       data.append('cloud_name', 'rosenmatt1')
-      const res = await axios.post('https://api/cloudinary.com/v1_1/rosenmatt1/raw/upload', data)
+      const res = await axios.post('https://api.cloudinary.com/v1_1/rosenmatt1/raw/upload', data)
       return res.data.url
     } catch (err) {
       console.error('Error Uploading File', err)
