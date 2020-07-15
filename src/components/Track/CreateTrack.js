@@ -21,15 +21,22 @@ import { GET_TRACKS_QUERY } from '../../pages/App'
 import Error from '../Shared/Error';
 
 const CreateTrack = ({ classes }) => {
-  const [open, setOpen] = useState(false)
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [file, setFile] = useState("")
-  const [submitting, setSubmitting] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [file, setFile] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [fileError, setFileError] = useState("");
 
   const handleAudioChange = (e) => {
     const selectedFile = e.target.files[0]
-    setFile(selectedFile)
+    const fileSizeLimit = 10000000 //10mb
+    if (selectedFile && selectedFile.size > fileSizeLimit) {
+      setFileError(`${selectedFile.name}: File size too large`)
+    } else {
+      setFile(selectedFile)
+      setFileError("")
+    }
     console.log("file MP3", selectedFile)
   }
 
@@ -87,7 +94,7 @@ const CreateTrack = ({ classes }) => {
 
                 <DialogContent>
                   <DialogContentText>
-                    Add a Title, Description, & Audio File
+                    Add a Title, Description, & Audio File (under 10mb)
               </DialogContentText>
                   <FormControl fullWidth>
                     <TextField
@@ -109,7 +116,7 @@ const CreateTrack = ({ classes }) => {
                       className={classes.textfield}
                     />
                   </FormControl>
-                  <FormControl>
+                  <FormControl error={Boolean(fileError)}>
                     <input required id="audio" type="file" accept="audio/*" onChange={handleAudioChange} className={classes.input} />
                     <label htmlFor="audio">
                       <Button variant="outlined" color={file ? "secondary" : "inherit"} component="span" className={classes.button}>
@@ -117,6 +124,7 @@ const CreateTrack = ({ classes }) => {
                         <LibraryMusicIcon className={classes.icon} />
                       </Button>
                       {file && file.name}
+                      <FormHelperText> {fileError} </FormHelperText>
                     </label>
                   </FormControl>
                 </DialogContent>
