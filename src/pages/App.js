@@ -19,11 +19,14 @@ const App = ({ classes }) => {
       <SearchTracks setSearchResults={setSearchResults} />
       <CreateTrack />
 
-      <Query query={GET_TRACKS_QUERY}>
+      <Query query={GET_TRACKS_QUERY}  >
         {({ data, loading, error }) => {
           if (loading) return <Loading />
           if (error) return <Error error={error} />
           const tracks = searchResults.length > 0 ? searchResults : data.tracks
+
+          // refetchQueries={() => [{ query: GET_TRACKS_QUERY }]} 
+          
 
           return <TrackList tracks={tracks} />
         }}
