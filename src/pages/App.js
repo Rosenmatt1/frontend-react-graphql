@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
@@ -11,23 +11,25 @@ import Loading from '../components/Shared/Loading';
 import Error from '../components/Shared/Error';
 
 
-const App = ({ classes }) => {
+const App = ({ classes, setSearchResults }) => {
+  const [searchResults, setSearchResults] = useState([])
+
   return (
-  <div className={classes.container}>
-    <SearchTracks />
-    <CreateTrack />
-    
-    <Query query={GET_TRACKS_QUERY}>
-      {({ data, loading, error }) => {
-        if (loading) return <Loading />
-        if (error) return <Error error={error}/>
+    <div className={classes.container}>
+      <SearchTracks setSearchResults={setSearchResults} />
+      <CreateTrack />
 
-        return <TrackList tracks={data.tracks}/>
-      }}
-    </Query>
+      <Query query={GET_TRACKS_QUERY}>
+        {({ data, loading, error }) => {
+          if (loading) return <Loading />
+          if (error) return <Error error={error} />
+          const tracks = searchResults.length > 0 ? seacrchResults : data.tracks
 
-  </div>
-    )
+          return <TrackList tracks={tracks} />
+        }}
+      </Query>
+    </div>
+  )
 };
 
 export const GET_TRACKS_QUERY = gql`

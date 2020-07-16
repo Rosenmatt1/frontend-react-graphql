@@ -18,6 +18,7 @@ const SearchTracks = ({ classes }) => {
       variables: { search }
     })
     console.log( res )
+    setSearchResults(res.data.tracks)
   }
 
   return (
