@@ -61,14 +61,14 @@ const UpdateTrack = ({ classes, track }) => {
     //upload our audio file and get returned url from API
     const uploadedUrl = await handleAudioUpload()
     console.log("uploadedUrl", uploadedUrl)
-    updateTrack({ variables: { title, description, url: uploadedUrl } })
+    updateTrack({ variables: { trackId: track.id, title, description, url: uploadedUrl } })
   }
 
   return (
     <>
       {/* Update Track Button */}
       <IconButton onClick={() => setOpen(true)}>
-        <EditIcon/>
+        <EditIcon />
       </IconButton>
 
       {/* Update Track Dialogue */}
@@ -82,7 +82,7 @@ const UpdateTrack = ({ classes, track }) => {
           setDescription("")
           setFile("")
         }}
-        // refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}  //could also use graphQL subscriptions
+      // refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}  //could also use graphQL subscriptions
       >
         {(updateTrack, { loading, error }) => {
           if (error) return <Error error={error} />
@@ -154,7 +154,7 @@ const UPDATE_TRACK_MUTATION = gql`
       url: $url
       description: $description
     ) {
-      racks {
+      track {
         id
         title
         description
