@@ -11,7 +11,7 @@ import Loading from '../components/Shared/Loading';
 import Error from '../components/Shared/Error';
 
 
-const App = ({ classes, setSearchResults }) => {
+const App = ({ classes }) => {
   const [searchResults, setSearchResults] = useState([])
 
   return (
@@ -23,7 +23,7 @@ const App = ({ classes, setSearchResults }) => {
         {({ data, loading, error }) => {
           if (loading) return <Loading />
           if (error) return <Error error={error} />
-          const tracks = searchResults.length > 0 ? seacrchResults : data.tracks
+          const tracks = searchResults.length > 0 ? searchResults : data.tracks
 
           return <TrackList tracks={tracks} />
         }}
