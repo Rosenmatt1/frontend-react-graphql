@@ -1,9 +1,37 @@
-import React from "react";
-// import IconButton from "@material-ui/core/IconButton";
-// import TrashIcon from "@material-ui/icons/DeleteForeverOutlined";
+import React, { useState, useContext } from "react";
+import { Mutation } from 'react-apollo';
+import { gql } from 'apollo-boost';
+import IconButton from "@material-ui/core/IconButton";
+import TrashIcon from "@material-ui/icons/DeleteForeverOutlined";
+import { UserContext } from '../../Root';
 
-const DeleteTrack = () => {
-  return <div>DeleteTrack</div>;
+const DeleteTrack = ( { track } ) => {
+  const currentUser = useContext(UserContext);
+  const isCurrentUser = currentUser.id === track.postedBy.id
+
+  return isCurrentUser && (
+      <Mutation 
+        mutation={DELETE_TRACK_MUTATION}
+        variables={{ trackId: track.id}}
+        onCompleted={data => {
+          console.log(data)
+        }}
+      >
+        {deleteTrack => (
+          <IconButton onClick={deleteTrack}>
+            <TrashIcon/>
+          </IconButton>
+        )}
+      </Mutation>
+    )
 };
+
+const DELETE_TRACK_MUTATION = gql`
+  mutation($trackId: Int!) {
+    deleteTrack(trackId: $trackId) {
+      trackId
+    }
+  }
+`
 
 export default DeleteTrack;
