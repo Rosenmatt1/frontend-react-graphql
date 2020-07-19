@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext }  from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
@@ -6,8 +6,25 @@ import { gql } from 'apollo-boost';
 import IconButton from "@material-ui/core/IconButton";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 
+import { UserContext } from '../../Root';
+
 
 const LikeTrack = ({ classes, trackId, likeCount }) => {
+  console.log("ID!!!!", trackId)
+   console.log("likecount", likeCount)
+  // const currentUser = useContext(UserContext);
+  // console.log("currentUser", currentUser)
+  
+  // const isCurrentUser = currentUser.id === track.postedBy.id
+
+  const handleDisableLikedTrack = () => {
+    // const userLike = currentUser.likeSet
+    // console.log("userLike", userLike)
+  //   const isTrackLiked = userLike.findIndex(({ track }) => track.id === trackId) > -1
+  //   console.log("isTrackLiked", isTrackLiked)
+  //   return isTrackLiked
+  }
+
   return (
       <Mutation mutation={CREATE_LIKE_MUTATION} variables={{ trackId }} onCompleted={data => console.log(data)} >
         {createLike => (
@@ -17,6 +34,7 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
               createLike()
             }} 
             className={classes.iconButton}
+            disabled={handleDisableLikedTrack()}
           >
 
             {likeCount}
