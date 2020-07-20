@@ -37,12 +37,17 @@ const Root = () => (
 )
 
 //allows to query for current user
-const ME_QUERY = gql`
+export const ME_QUERY = gql`
     {
         me {
             id 
             username
             email
+            likeSet {
+                track {
+                    id
+                }
+            }
         }
     }
 `
