@@ -55,6 +55,12 @@ const CreateTrack = ({ classes }) => {
     }
   }
 
+  const handleUpdateCache = (cache, { data: { createTrack } }) => {  //cache can also be called proxy
+    const data = cache.readQuery({ query: GET_TRACKS_QUERY })  //readQuery does not hit server, only cache
+    const tracks = data.tracks.concat(createTrack.track)  // concat gives a cpy of original array, does not mutate(.push would mutate)
+    cache.writeQuery({ query: GET_TRACKS_QUERY, data: { tracks } }) //writeQuery does not hit server, only cache
+  }
+
   const handleSubmit = async (e, createTrack) => {
     e.preventDefault()
     setSubmitting(true)
@@ -82,7 +88,8 @@ const CreateTrack = ({ classes }) => {
           setDescription("")
           setFile("")
         }}
-        refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}  //could also use graphQL subscriptions
+        update={handleUpdateCache}
+        // refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}  //could also use graphQL subscriptions
       >
         {(createTrack, { loading, error }) => {
           if (error) return <Error error={error} />
@@ -155,6 +162,13 @@ const CREATE_TRACK_MUTATION = gql`
         title
         description 
         url
+        likes {
+          id
+        }
+        postedBy {
+          id 
+          username
+        }
       }
     }
   }

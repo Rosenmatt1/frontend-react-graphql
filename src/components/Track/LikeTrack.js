@@ -10,18 +10,13 @@ import { UserContext, ME_QUERY } from '../../Root';
 
 
 const LikeTrack = ({ classes, trackId, likeCount }) => {
-  // console.log("ID!!!!", trackId)
-  //  console.log("likecount", likeCount)
   const currentUser = useContext(UserContext);
-  // console.log("currentUser", currentUser)
-
-  // const isCurrentUser = currentUser.id === track.postedBy.id
 
   const handleDisableLikedTrack = () => {
     const userLike = currentUser.likeSet
-    console.log("userLike", userLike)
+    // console.log("userLike", userLike)
     const isTrackLiked = userLike.findIndex(({ track }) => track.id === trackId) > -1
-    console.log("isTrackLiked", isTrackLiked)
+    // console.log("isTrackLiked", isTrackLiked)
     return isTrackLiked
   }
 
