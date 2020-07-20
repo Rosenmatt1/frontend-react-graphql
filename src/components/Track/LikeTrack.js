@@ -39,6 +39,7 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
     )
 };
 
+//  Whenever have a mutation that updates data in the app, to reflect in cache need to give id and fields that were updated
 const CREATE_LIKE_MUTATION = gql`
   mutation($trackId: Int!) {
     createLike(trackId: $trackId) {
