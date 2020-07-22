@@ -16,9 +16,96 @@ import Error from "../components/Shared/Error";
 import Loading from "../components/Shared/Loading";
 
 
-const Profile = ({ classes }) => {
-  return <div>Profile</div>;
+const Profile = ({ classes, match }) => {
+  const id = match.params.id
+
+  return (
+    <Query query={PROFILE_QUERY} variables={{ id }}>
+      {({ data, loading, error }) => {
+        if (loading) return <Loading />
+        if (error) return <Error error={error} />
+
+        return (
+          <div>
+            <Card className={classes.card}>
+              <CardHeader
+                avatar={<Avatar>{data.user.username[0]}</Avatar>}
+                title={data.user.username}
+                subheader={`Joined $${data.user.dateJoined}`}
+              />
+            </Card>
+
+            <Paper elevation={1} className={classes.paper} >
+              <Typography variant="title" className={classes.title}>
+                <AudiotrackIcon className={classes.audioIcon} />
+              Created Tracks
+            </Typography>
+              {data.user.trackSet.map(track => (
+                <div key={track.id}>
+                  <Typography>
+                    {track.title}  {track.likes.length} Likes
+                  <AudioPlayer url={track.url} />
+                    <Divider className={classes.divider} />
+                  </Typography>
+                </div>
+              ))}
+            </Paper>
+
+            <Paper elevation={1} className={classes.paper}>
+              <Typography variant="title" className={classes.title}>
+                <ThumbUpIcon className={classes.thumbIcon}>
+                  Liked Tracks
+            </ThumbUpIcon>
+              </Typography>
+              {data.user.likeSet.map(({ track }) => (
+                <div key={track.id}>
+                  <Typography>
+                    {track.title} {track.likes.length} Likes {track.postedBy.username}
+                  </Typography>
+                  <AudioPlayer url={track.url} />
+                  <Divider className={classes.divider} />
+                </div>
+              ))}
+            </Paper>
+          </div>
+        )
+      }}
+    </Query>
+  )
 };
+
+const PROFILE_QUERY = gql`
+query ($id: Int!) {
+  user(id: $id) {
+    id
+    username
+    dateJoined
+    likeSet {
+      id
+      track {
+        id
+        title
+        url
+        likes {
+          id
+        }
+        postedBy {
+          id
+          username
+        }
+      }
+    }
+    trackSet {
+      id
+      title
+      url 
+      likes {
+        id
+      }
+    }
+  }
+}
+`
 
 const styles = theme => ({
   paper: {
