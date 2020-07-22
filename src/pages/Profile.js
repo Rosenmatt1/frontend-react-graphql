@@ -1,13 +1,20 @@
 import React from "react";
+import { Query } from "react-apollo";
+import { gql } from 'apollo-boost'; //allows to parse
 import withStyles from "@material-ui/core/styles/withStyles";
-// import Card from "@material-ui/core/Card";
-// import CardHeader from "@material-ui/core/CardHeader";
-// import Avatar from "@material-ui/core/Avatar";
-// import Paper from "@material-ui/core/Paper";
-// import Typography from "@material-ui/core/Typography";
-// import ThumbUpIcon from "@material-ui/icons/ThumbUpTwoTone";
-// import AudiotrackIcon from "@material-ui/icons/AudiotrackTwoTone";
-// import Divider from "@material-ui/core/Divider";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import Avatar from "@material-ui/core/Avatar";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import ThumbUpIcon from "@material-ui/icons/ThumbUpTwoTone";
+import AudiotrackIcon from "@material-ui/icons/AudiotrackTwoTone";
+import Divider from "@material-ui/core/Divider";
+
+import AudioPlayer from "../components/Shared/AudioPlayer";
+import Error from "../components/Shared/Error";
+import Loading from "../components/Shared/Loading";
+
 
 const Profile = ({ classes }) => {
   return <div>Profile</div>;
