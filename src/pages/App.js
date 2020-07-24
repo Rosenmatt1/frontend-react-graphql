@@ -27,7 +27,6 @@ const App = ({ classes }) => {
 
           // refetchQueries={() => [{ query: GET_TRACKS_QUERY }]} 
           
-
           return <TrackList tracks={tracks} />
         }}
       </Query>

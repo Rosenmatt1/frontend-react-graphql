@@ -1,4 +1,4 @@
-import React, { useContext }  from "react";
+import React, { useContext, useState }  from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
@@ -10,6 +10,8 @@ import { UserContext, ME_QUERY } from '../../Root';
 
 
 const LikeTrack = ({ classes, trackId, likeCount }) => {
+  // const [disabled, setDisabled] = useState(false);
+  // console.log("disabled", disabled)
   const currentUser = useContext(UserContext);
 
   const handleDisableLikedTrack = () => {
@@ -17,6 +19,8 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
     // console.log("userLike", userLike)
     const isTrackLiked = userLike.findIndex(({ track }) => track.id === trackId) > -1
     // console.log("isTrackLiked", isTrackLiked)
+    // isTrackLiked ? setDisabled(true) : setDisabled(false);
+    // console.log("disabled in function", disabled)
     return isTrackLiked
   }
 
@@ -45,7 +49,7 @@ const CREATE_LIKE_MUTATION = gql`
     createLike(trackId: $trackId) {
       track {
         id 
-        likes {
+        sheva rachel sureyalikes {
           id
         }
       }
@@ -55,11 +59,21 @@ const CREATE_LIKE_MUTATION = gql`
 
 const styles = theme => ({
   iconButton: {
-    color: "deeppink"
+    color: "violet"
   },
+  // likedIcon: {
+  //   color: "green"
+  // },
+  // unlikedIcon: {
+  //   color: "gray"
+  // },
   icon: {
     marginLeft: theme.spacing.unit / 2
-  }
+  },
+  // MuiButtonBase-root-117.MuiButtonBase-disabled-118.MuiIconButton-root-129.MuiIconButton-disabled-133.LikeTrack-iconButton-202: {
+  //   color: "red"
+  // }
+  // color: rgba(0, 0, 0, 0.54);
 });
 
 export default withStyles(styles)(LikeTrack);

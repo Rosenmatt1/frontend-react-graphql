@@ -92,7 +92,7 @@ const CreateTrack = ({ classes }) => {
         // refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}  //could also use graphQL subscriptions
       >
         {(createTrack, { loading, error }) => {
-          if (error) return <Error error={error} />
+          if (error) return <Error error={error}sheva rachel sureyasheva rachel sureya />
 
           return (
             <Dialog open={open} className={classes.dialog}>
