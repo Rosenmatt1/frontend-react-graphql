@@ -32,7 +32,8 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
               event.stopPropagation();
               createLike()
             }} 
-            className={classes.iconButton}
+            // className={classes.iconButton}
+            className={likeCount > 0 ? classes.likedIcon : classes.unlikedIcon}
             disabled={handleDisableLikedTrack()}
           >
             {likeCount}
@@ -58,15 +59,15 @@ const CREATE_LIKE_MUTATION = gql`
 `
 
 const styles = theme => ({
-  iconButton: {
-    color: "violet"
+  // iconButton: {
+  //   color: "violet"
+  // },
+  likedIcon: {
+    color: "green"
   },
-  // likedIcon: {
-  //   color: "green"
-  // },
-  // unlikedIcon: {
-  //   color: "gray"
-  // },
+  unlikedIcon: {
+    color: "grey"
+  },
   icon: {
     marginLeft: theme.spacing.unit / 2
   },
