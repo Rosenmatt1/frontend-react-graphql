@@ -10,14 +10,17 @@ import Auth from './components/Auth'
 const client = new ApolloClient({
     // uri: 'http://localhost:8000/graphql/',
     uri: 'https://music-player-account.herokuapp.com/',
-    fetchOptions: { //saying includes an auth header
-        credentials: "include"
+    fetchOptions: {      //saying includes an auth header
+        credentials: "same origin"
     },
     request: operation => {
         const token = localStorage.getItem('authToken') || ""
         operation.setContext({
             headers: {
-                Authorization: `JWT ${token}`
+                Authorization: `JWT ${token}`,
+                "X-CSRFToken": `JWT ${token}`,
+                "Accept": "application/json",
+                'Content-Type': 'application/json'
             }
         })
     },
