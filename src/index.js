@@ -11,16 +11,17 @@ const client = new ApolloClient({
     // uri: 'http://localhost:8000/graphql/',
     uri: 'https://music-player-account.herokuapp.com/',
     fetchOptions: {      //saying includes an auth header
-        credentials: "same origin"
+        // credentials: "same origin",
+        credentials: "include"
     },
     request: operation => {
         const token = localStorage.getItem('authToken') || ""
         operation.setContext({
             headers: {
                 Authorization: `JWT ${token}`,
-                "X-CSRFToken": `JWT ${token}`,
-                "Accept": "application/json",
-                'Content-Type': 'application/json'
+                // "X-CSRFToken": `JWT ${token}`,
+                // "Accept": "application/json",
+                // 'Content-Type': 'application/json'
             }
         })
     },
