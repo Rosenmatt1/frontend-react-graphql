@@ -50,7 +50,7 @@ const CREATE_LIKE_MUTATION = gql`
     createLike(trackId: $trackId) {
       track {
         id 
-        sheva rachel sureyalikes {
+        likes {
           id
         }
       }
