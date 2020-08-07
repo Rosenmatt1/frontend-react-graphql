@@ -10,11 +10,13 @@ import { UserContext, ME_QUERY } from '../../Root';
 
 
 const LikeTrack = ({ classes, trackId, likeCount }) => {
+  console.log("LikeCountLoad", likeCount)
   // const [disabled, setDisabled] = useState(false);
   // console.log("disabled", disabled)
   const currentUser = useContext(UserContext);
 
   const handleDisableLikedTrack = () => {
+    console.log("LikeCountLoad", likeCount)
     const userLike = currentUser.likeSet
     // console.log("userLike", userLike)
     const isTrackLiked = userLike.findIndex(({ track }) => track.id === trackId) > -1
@@ -25,7 +27,7 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
   }
 
   return (
-      <Mutation mutation={CREATE_LIKE_MUTATION} variables={{ trackId }} onCompleted={data => console.log(data)} refetchQueries={() => [{ query: ME_QUERY }]} >
+      <Mutation mutation={CREATE_LIKE_MUTATION} variables={{ trackId }} onCompleted={data => console.log("oncompleted data", data)} refetchQueries={() => [{ query: ME_QUERY }]} >
         {createLike => (
           <IconButton 
             onClick={event => {
@@ -33,7 +35,7 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
               createLike()
             }} 
             // className={classes.iconButton}
-            className={likeCount > 0 ? classes.likedIcon : classes.unlikedIcon}
+            className={likeCount === 0 ? classes.unlikedIcon : classes.likedIcon }
             disabled={handleDisableLikedTrack()}
           >
             {likeCount}
@@ -59,14 +61,14 @@ const CREATE_LIKE_MUTATION = gql`
 `
 
 const styles = theme => ({
-  // iconButton: {
-  //   color: "violet"
-  // },
+  iconButton: {
+    color: "violet"
+  },
   likedIcon: {
-    color: "green"
+    color: "deeppink !important"
   },
   unlikedIcon: {
-    color: "grey"
+    color: "grey !important"
   },
   icon: {
     marginLeft: theme.spacing.unit / 2
