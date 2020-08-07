@@ -21,6 +21,10 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true
+  },
+  action: {
+    disabledBackground: 'deeppink',
+    disabled: 'deeppink'
   }
 });
 

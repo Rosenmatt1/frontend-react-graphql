@@ -6,7 +6,6 @@ const musicStarted = () => {
 }
 
 const AudioPlayer = ({ url }) => (
-
     <ReactPlayer url={url} height="30px" width="500px" controls={true} onStart={() => musicStarted()} />
 )
 

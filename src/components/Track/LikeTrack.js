@@ -10,19 +10,12 @@ import { UserContext, ME_QUERY } from '../../Root';
 
 
 const LikeTrack = ({ classes, trackId, likeCount }) => {
-  console.log("LikeCountLoad", likeCount)
-  // const [disabled, setDisabled] = useState(false);
-  // console.log("disabled", disabled)
   const currentUser = useContext(UserContext);
 
   const handleDisableLikedTrack = () => {
-    console.log("LikeCountLoad", likeCount)
     const userLike = currentUser.likeSet
-    // console.log("userLike", userLike)
     const isTrackLiked = userLike.findIndex(({ track }) => track.id === trackId) > -1
-    // console.log("isTrackLiked", isTrackLiked)
-    // isTrackLiked ? setDisabled(true) : setDisabled(false);
-    // console.log("disabled in function", disabled)
+    
     return isTrackLiked
   }
 
@@ -34,9 +27,10 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
               event.stopPropagation();
               createLike()
             }} 
-            // className={classes.iconButton}
-            className={likeCount === 0 ? classes.unlikedIcon : classes.likedIcon }
+            className={classes.iconButton}
+            // className={likeCount === 0 ? classes.unlikedIcon : classes.likedIcon }
             disabled={handleDisableLikedTrack()}
+            // classes={{ disabled: classes.disabledIconButton }}
           >
             {likeCount}
           <ThumbUpIcon className={classes.icon}/>
@@ -62,21 +56,24 @@ const CREATE_LIKE_MUTATION = gql`
 
 const styles = theme => ({
   iconButton: {
-    color: "violet"
+    color: "lightgrey !important",
+    "&:disabled": {
+      color: "deeppink !important"
+    }
   },
-  likedIcon: {
-    color: "deeppink !important"
-  },
-  unlikedIcon: {
-    color: "grey !important"
-  },
+ 
+  // disabledIconButton: {
+  //   color: 'deeppink'
+  // },
+  // likedIcon: {
+  //   color: "deeppink !important"
+  // },
+  // unlikedIcon: {
+  //   color: "grey !important"
+  // },
   icon: {
     marginLeft: theme.spacing.unit / 2
   },
-  // MuiButtonBase-root-117.MuiButtonBase-disabled-118.MuiIconButton-root-129.MuiIconButton-disabled-133.LikeTrack-iconButton-202: {
-  //   color: "red"
-  // }
-  // color: rgba(0, 0, 0, 0.54);
 });
 
 export default withStyles(styles)(LikeTrack);
