@@ -28,9 +28,7 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
               createLike()
             }} 
             className={classes.iconButton}
-            // className={likeCount === 0 ? classes.unlikedIcon : classes.likedIcon }
             disabled={handleDisableLikedTrack()}
-            // classes={{ disabled: classes.disabledIconButton }}
           >
             {likeCount}
           <ThumbUpIcon className={classes.icon}/>
@@ -61,16 +59,6 @@ const styles = theme => ({
       color: "deeppink !important"
     }
   },
- 
-  // disabledIconButton: {
-  //   color: 'deeppink'
-  // },
-  // likedIcon: {
-  //   color: "deeppink !important"
-  // },
-  // unlikedIcon: {
-  //   color: "grey !important"
-  // },
   icon: {
     marginLeft: theme.spacing.unit / 2
   },
