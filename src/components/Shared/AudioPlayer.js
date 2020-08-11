@@ -1,5 +1,7 @@
 import React from "react";
 import ReactPlayer from "react-player";
+import { Mutation } from 'react-apollo';
+import { gql } from 'apollo-boost';
 
 const musicStarted = () => {
     // console.log("IT PLAYED11111")
