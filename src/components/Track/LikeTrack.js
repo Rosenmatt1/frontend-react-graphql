@@ -10,6 +10,7 @@ import { UserContext, ME_QUERY } from '../../Root';
 
 
 const LikeTrack = ({ classes, trackId, likeCount }) => {
+  // console.log(tracks)
   const currentUser = useContext(UserContext);
 
   const handleDisableLikedTrack = () => {
