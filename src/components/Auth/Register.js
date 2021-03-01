@@ -59,7 +59,6 @@ const Register = ({ classes, setNewUser }) => {
           setOpen(true)
         }}>
           {(createUser, { loading, error }) => {
-
             return (
               <form onSubmit={(e) => handleSubmit(e, createUser)} className={classes.form}>
                 <FormControl margin="normal" required fullWidth>
