@@ -28,7 +28,7 @@ const Login = ({ classes, setNewUser }) => {
         </Typography>
 
         <Mutation mutation={LOGIN_MUTATION} variables={{ username, password }}>
-          {(tokenAuth, { loading, error, called, client}) => {
+          {(tokenAuth, { loading, error, called, client }) => {
 
             const handleSubmit = async (e, tokenAuth, client) => {
               e.preventDefault()

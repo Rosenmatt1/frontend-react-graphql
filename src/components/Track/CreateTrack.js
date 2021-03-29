@@ -89,7 +89,7 @@ const CreateTrack = ({ classes }) => {
           setFile("")
         }}
         update={handleUpdateCache}
-        // refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}  //could also use graphQL subscriptions
+      // refetchQueries={() => [{ query: GET_TRACKS_QUERY }]}  //could also use graphQL subscriptions
       >
         {(createTrack, { loading, error }) => {
           if (error) return <Error error={error} />

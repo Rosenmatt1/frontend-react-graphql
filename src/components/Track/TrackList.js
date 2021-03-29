@@ -30,7 +30,7 @@ const TrackList = ({ classes, tracks }) => (
                 color: 'primary'
               }}
               primary={track.title}
-            secondary={
+              secondary={
               <Link className={classes.link} to={`/profile/${track.postedBy.id}`}>
                 Uploaded by: {track.postedBy.username}
               </Link>

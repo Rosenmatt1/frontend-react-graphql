@@ -18,7 +18,7 @@ export const UserContext = React.createContext()
 //  'network-only' means will always send netwrok request, 'no-cache' means will always send network requst and not cache
 
 const Root = () => (
-    <Query query={ME_QUERY} fetchPolicy='cache-and-network'>  
+    <Query query={ME_QUERY} fetchPolicy='cache-and-network'>
         {({ data, loading, error }) => {
             if (loading) return <Loading loading={loading} />
             if (error) return <Error error={error} />
@@ -65,6 +65,5 @@ export const ME_QUERY = gql`
 //         }
 //     }
 // `
-
 
 export default withRoot(Root);
